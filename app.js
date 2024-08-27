@@ -10,6 +10,7 @@ const {injectUser}= require("./middlewares/middleware")
 const userRouter = require("./routers/userRouter");
 const authRouter = require("./routers/authRouter");
 const productRouter = require("./routers/productRouter");
+const pagesRouter = require("./routers/pagesRouter")
 const {everyMinute} = require("./services/cronService");
 // const pagesRouter = require("./routers/pagesRouter");
 dotenv.config();
@@ -48,7 +49,7 @@ app.get("/run-job", (req, res) => {
 
 app.use("/", authRouter);
 app.use("/", userRouter);
-// app.use("/", pagesRouter);
+app.use("/", pagesRouter);
 app.use("/", productRouter);
 
 
