@@ -1,0 +1,47 @@
+
+
+<style>
+  @import url(https://fonts.googleapis.com/css?family=Denk+One);
+@import url(https://fonts.googleapis.com/css?family=Arimo);
+.rotingtxt{
+  width: 100%;
+	-webkit-transform: rotate(331deg);
+	-moz-transform: rotate(331deg);
+	-o-transform: rotate(331deg);
+	transform: rotate(331deg);
+	font-size: 4em;
+	color: rgba(255, 5, 5, 0.365);
+	position: absolute;
+	font-family: 'Denk One', sans-serif;
+	text-transform:uppercase;
+	padding: 10%;
+ 
+}
+
+
+</style>
+
+  
+
+
+
+<div class="card m-2" style="width: 18rem"> 
+  <% if (product.isDeleted) { %>
+    <p class="rotingtxt">DELETED</p>
+     <% } %>
+  <img src="<%= product.image %>" class="card-img-top" alt="...">
+    <div class="card-body">
+      <h5 class="card-title text-primary"><%= product.name %></h5>
+      <h5 class="card-title text-success"><%= product.price %></h5>
+        <p class="card-text text-secondary"><%= product.description %></p>
+        
+      <a href="#" class="btn btn-primary">add to basket</a>
+      <a href="productview/<%= product.id %>" class="btn btn-secondary">view</a>
+    </div>
+</div>
+
+
+<script>
+
+</script>
+  

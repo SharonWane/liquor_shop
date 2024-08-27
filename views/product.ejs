@@ -1,0 +1,140 @@
+<%- include('partials/header'); %>
+
+<section class="bg-secondary">
+
+    <!-- Nwar using products
+<div class="productimg1"><img src="/static/images/meme.jpg" alt="" width="500px" ></div> -->
+
+
+ <% if (user.role === "admin") { %>
+    <div class="p-2">
+        <button class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-sm">Add Product</button>
+    </div>
+ <% } %>   
+
+
+<div class="products_container">
+    <% if (locals.products) { %>
+        <% console.log("start products") %>
+        <div class="d-flex justify-content-center"><%- include('partials/selection-section', {selection: products}) %></div>
+        <% } else { %>
+         <h2 class="info_sorry">
+            Sorry
+         </h2>
+         <p class="pdcontact">
+            if you have any inqquiry, please contact us.
+         </p>
+    <% } %>
+</div>
+
+
+</section>
+
+<div class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm ">
+      <div class="modal-content">
+          <form action="" id="add_product_form" method="post">
+              <h2>Add New Product</h2>
+              <div class="mb-2 mx-2">
+                  <label for="name" class="form-lable">Name</label>
+                  <input type="text" class="form-control" name="name" id="name" required>
+                  <div class="name error text-danger"></div>
+              </div>
+              <div class="mb-2 mx-2">
+                  <label for="price" class="form-lable">Price</label>
+                  <input type="text" class="form-control" name="price" id="price" required>
+                  <div class="price error text-danger"></div>
+              </div>
+              <div class="mb-2 mx-2">
+                  <label for="dec" class="form-lable">Description</label>
+                  <textarea name="dec" id="dec" cols="30" rows="3"></textarea>
+                 
+                  <div class="dec error text-danger"></div>
+              </div>
+              <div class="mb-2 mx-2">
+                  <label for="img" class="form-lable">Image URL</label>
+                  <input type="text" class="form-control" name="img" id="img" required>
+                  <div class="img error text-danger"></div>
+              </div>
+              <div class="mb-2 d-flex justify-content-center">
+                  <button type="submit" class="btn btn-primary">Add</button>
+              </div>
+          </form>
+      </div>
+    </div>
+  </div>
+ 
+
+
+
+
+<script>
+  const form = document.getElementById("add_product_form");
+
+  form.addEventListener("submit", async(e)=>{
+      e.preventDefault();
+
+      let name = document.getElementById("name").value;
+      let price = document.getElementById("price").value;
+      let description = document.getElementById("dec").value;
+      let image = document.getElementById("img").value;
+     
+      try{
+          let res = await fetch("/product",{
+              method:"POST",
+              headers:{"Content-Type":"application/json"},
+              body: JSON.stringify({
+                  name,
+                  price,
+                  description,
+                  image
+              })
+
+          })
+          if(res.status == 201){
+              alert("Product Added successfully");
+              form.reset();
+          }
+
+      }catch(err){
+          console.log(err)
+          alert("something went worng");
+      }
+  })
+</script>
+
+<script>
+    const search_bar = document.getElementById("search_bar");
+    
+    search_bar.addEventListener("submit", async(e)=>{
+        e.preventDefault();
+        let keyword = encodeURIComponent(search_bar.keyword.value);
+        
+        if(keyword===""){
+            console.log("empty keyword")
+            location.href = location.href
+            
+        }
+        try{
+            let response = await fetch(`/find-products?keyword=${keyword}`,{
+                method: "GET",
+                headers:{
+                    "Content-Type":"application/json"
+                }
+            })
+            if(response.status === 200){
+                response.json().then(data=>{
+                   
+                    document.querySelector(".products_container").innerHTML = data.html
+                }).catch(err=>console.log(err))
+            }
+
+        }catch(err){
+            console.log(err)
+        }
+        
+        
+    })
+</script>
+
+<%- include('partials/footer'); %>

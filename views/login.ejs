@@ -1,0 +1,57 @@
+<%- include('partials/header') %>
+<link rel="stylesheet" href="/static/css/register.css">
+
+<div class="bigbox">
+    
+
+<div class="register-container">
+    <h2>Login</h2>
+    <form id="login_form">
+        
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" required>
+        </div>
+        <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" required>
+        </div>
+        
+        <button type="submit">LogIn</button>
+        <a href="register">Register...</a>
+    </form>
+</div>
+</div>
+
+<script>
+    const login_form = document.getElementById("login_form");
+    login_form.addEventListener("submit", async(e)=>{
+        e.preventDefault();
+       
+        let email = document.getElementById("email").value;
+        let password = document.getElementById("password").value;
+
+        try{
+            let res = await fetch("/login", {
+                method:"POST",
+                headers: {"Content-Type": "application/json"},
+                body: JSON.stringify({
+                    email,password
+                })
+            });
+            if( res.status==200){
+                location.assign("/");
+                return;
+            }
+            console.log(JSON.parse(res.body));
+
+        }
+        catch(err){
+            console.log(err);
+            console.log("We fucked up");
+        }
+
+    });
+</script>
+
+<%- include('partials/footer') %>
