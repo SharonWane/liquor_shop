@@ -1,5 +1,6 @@
 const {User} = require("../Models/UserModel");
 const jwt = require("jsonwebtoken");
+
 const { productAdmin } = require("../controllers/productController");
 
 //middleware for authentication
@@ -63,5 +64,9 @@ const injectUser = function(req,res,next){
         next();
     })
 }
+
+
+
+
 
 module.exports={authenticated,injectUser,adminOnly};

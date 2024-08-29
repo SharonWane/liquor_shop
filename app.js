@@ -1,4 +1,5 @@
 const express = require("express");
+const session = require('express-session');
 const {db_connect} = require("./database/dbHelper");
 const bodyParser = require("body-parser");
 const app = express();
@@ -34,18 +35,26 @@ app.get("/ping", (req, res)=>{
     res.send("pong")
 })
 
+// Set up session middleware
+app.use(session({
+    secret: 'yourSecretKey',  // Replace with a strong secret key in production
+    resave: false,
+    saveUninitialized: true,
+    cookie: { secure: false } // Set to true if using HTTPS
+}));
+
 app.get("/", (req,res)=>{
     res.render("home",
     {wellcomeString : "Nice to See you",
     title_name: "Home"})
 });
 
-app.get("/run-job", (req, res) => {
-    everyMinute.fireOnTick();
-    res.status(200).json({
-        data: "running"
-    })
-})
+// app.get("/run-job", (req, res) => {
+//     everyMinute.fireOnTick();
+//     res.status(200).json({
+//         data: "running"
+//     })
+// })
 
 app.use("/", authRouter);
 app.use("/", userRouter);
@@ -53,6 +62,15 @@ app.use("/", pagesRouter);
 app.use("/", productRouter);
 
 
+
+
+// // Initialize basket in session as an array
+// app.use((req, res, next) => {
+//     if (!req.session.basket) {
+//         req.session.basket = [];
+//     }
+//     next();
+// });
 
 
 
