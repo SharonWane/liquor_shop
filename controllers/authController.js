@@ -21,7 +21,7 @@ module.exports.loginPost = async(req,res)=>{
     let user = await User.findOne({email: email});
     if(!user){
         res.status(404).json({
-            "errors":{
+            errors:{
                 "email":"email not found"
             }
         });

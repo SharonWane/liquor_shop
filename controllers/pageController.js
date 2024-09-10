@@ -41,21 +41,30 @@ module.exports.basketadd = async (req, res) => {
         if (product) {
 
            // if(req.session.basket.length === 0){
-                req.session.basket.push({
-                    productId: productID,
-                    name: Name,
-                    price: Price,
-                    image: img,
-                    dec: Description,
-                    quantity: 1
-                });
+                // req.session.basket.push({
+                //     productId: productID,
+                //     name: Name,
+                //     price: Price,
+                //     image: img,
+                //     dec: Description,
+                //     quantity: 1
+                // });
            // }
            //else{
-                // const existingItem = req.session.basket.find(item => item.productId === productID);
+                let existingItem = req.session.basket.find(item => item.productId === productID);
 
-                // if (existingItem) {
-                //     existingItem.quantity += 1;
-                // }
+                if (existingItem) {
+                    existingItem.quantity += 1;
+                }else{
+                    req.session.basket.push({
+                        productId: productID,
+                        name: Name,
+                        price: Price,
+                        image: img,
+                        dec: Description,
+                        quantity: 1
+                    });
+                }
             //}
         
 

@@ -24,7 +24,7 @@
                         <div class="ml-2"><span class="font-weight-bold d-block"><%= item.name %></span><span class="spec"><%= item.dec %></span></div>
                     </div>
                     <div class="d-flex flex-row align-items-center"><span class="d-block"><%= item.quantity %></span>
-                        <span class="d-block ml-5 font-weight-bold"><%= item.price %></span>
+                        <span class="d-block ml-5 font-weight-bold"><%= item.price*item.quantity %></span>
                         <form action="/basket/<%= item.productId %>/remove" method="POST">
                             
                             <button class="btn btn-warning"><i class="fa fa-trash-o ml-3 text-black-50"></i></button>
@@ -40,7 +40,9 @@
         </div>
         <div class="col-md-4">
             <div class="payment-info">
-                <div class="d-flex justify-content-between align-items-center"><span>Card details</span><img class="rounded" src="https://i.imgur.com/WU501C8.jpg" width="30"></div><span class="type d-block mt-3 mb-1">Card type</span><label class="radio"> <input type="radio" name="card" value="payment" checked> <span><img width="30" src="https://img.icons8.com/color/48/000000/mastercard.png"/></span> </label>
+                <div class="d-flex justify-content-between align-items-center"><span>Card details</span><%= user.username %></div>
+                <span class="type d-block mt-3 mb-1">Card type</span>
+<label class="radio"> <input type="radio" name="card" value="payment" checked> <span><img width="30" src="https://img.icons8.com/color/48/000000/mastercard.png"/></span> </label>
 
 <label class="radio"> <input type="radio" name="card" value="payment"> <span><img width="30" src="https://img.icons8.com/officel/48/000000/visa.png"/></span> </label>
 
@@ -55,11 +57,35 @@
                     <div class="col-md-6"><label class="credit-card-label">CVV</label><input type="text" class="form-control credit-inputs" placeholder="342"></div>
                 </div>
                 <hr class="line">
-                <div class="d-flex justify-content-between information"><span>Subtotal</span><span></span></div>
-                <div class="d-flex justify-content-between information"><span>Shipping</span><span>$20.00</span></div>
-                <div class="d-flex justify-content-between information"><span>Total(Incl. taxes)</span><span>$3020.00</span></div><button class="btn btn-primary btn-block d-flex justify-content-between mt-3" type="button"><span>$3020.00</span><span>Checkout<i class="fa fa-long-arrow-right ml-1"></i></span></button></div>
+                <div class="d-flex justify-content-between information"><span>Subtotal</span><span id="subtotal">
+                    <%= basket.reduce((a, c)=>a+ Number(c.price*c.quantity), 0) %>
+                    
+                </span></div>
+                <div class="d-flex justify-content-between information"><span>Shipping</span><span id="tax"></span></div>
+                <div class="d-flex justify-content-between information"><span>Total(Incl. taxes)</span><span id="total"></span></div>
+                <button class="btn btn-primary btn-block d-flex justify-content-between mt-3" type="button">
+                    <span>Checkout<i class="fa fa-long-arrow-right ml-1"></i></span>
+                </button></div>
         </div>
     </div>
 </div>
+
+
+<script>
+    
+    
+
+    let subtotal = document.getElementById("subtotal").textContent;
+    console.log(subtotal);
+    let tax = subtotal/20;
+    console.log(tax);
+
+    let total = Number(subtotal) + Number(tax);
+    console.log(total);
+    document.getElementById("tax").innerHTML = tax;
+    document.getElementById("total").innerHTML = total;
+
+    
+</script>
 
 <%- include('partials/footer') %>

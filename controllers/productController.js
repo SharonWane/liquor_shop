@@ -102,6 +102,8 @@ module.exports.productview = async(req,res)=>{
     console.log(productID);
     try{
         const productDetail = await Product.findOne({_id:(productID)});
+        console.log("Discount: ")
+        console.log(Object.keys(productDetail))
         res.render("productview", {title_name:"Product Details", productDetail:productDetail });
         if(!productDetail){
             res.status(404).json({
@@ -130,10 +132,11 @@ module.exports.productUpdatePost = async(req,res)=>{
     let update_image = req.body.update_img;
     let update_description = req.body.update_dec;
     let updatedAt = new Date();
-    // let discount = req.body.discount;
-    // let start_date = req.body.start_date;
+    let discount = req.body.discount;
+    let start_date = new Date();
+    let Code = req.body.code;
     // let end_date = req.body.end_date;
-    // let isActive = req.body.isctive;
+    let isactive = req.body.isActive;
     
     console.log(productId);
     try {
@@ -142,7 +145,14 @@ module.exports.productUpdatePost = async(req,res)=>{
           price: update_price,
           description: update_description,
           image: update_image,
-          updatedAt: updatedAt
+          updatedAt: updatedAt,
+          discount:[
+            {
+                code: Code,
+                percent: discount,
+                isActive : isactive
+            }
+          ]
         });
         res.render("product",{ title_name:"Products"}, (err, html)=>{
             if(err){

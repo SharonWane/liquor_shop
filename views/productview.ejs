@@ -17,19 +17,27 @@
                     <div class="col-md-6">
                         <div class="product p-4">
                             <div class="d-flex justify-content-between align-items-center">
-                                <div class="d-flex align-items-center"> <i class="fa fa-long-arrow-left"></i> <a class="ml-1" href="../product">Back</a> </div> <i class="fa fa-shopping-cart text-muted"></i>
+                                <div class="d-flex align-items-center"> <i class="fa fa-long-arrow-left"></i> <a class="ml-1" href="../product">Back</a> </div> <a href="/basket"><i class="fa fa-shopping-cart text-muted"></i></a> 
                             </div>
                             <div class="mt-4 mb-3"> <span class=" text-muted brand" id="productId"><%= productDetail.id %></span>
                                 <h5 class="text-uppercase"><%= productDetail.name %></h5>
                                 <div class="price d-flex flex-row align-items-center"> <span class="act-price"><%= productDetail.price %></span>
-                                    <div class="ml-2"> <small class="dis-price"></small>  </div>
+                                    <% if (productDetail.discount[0] && productDetail.discount[0].isActive) { %>
+                                        <div class="ml-2"> 
+                                            <small class="dis-price"><%= productDetail.price %></small>
+                                             <%= productDetail.discount[0].percent %> % 
+                                        </div>
+                                    <% } %>
+                                    
+                                    
                                 </div>
                             </div>
                             <p class="about"><%= productDetail.description %></p>
                             <!-- <div class="sizes mt-5">
                                 <h6 class="text-uppercase">Size</h6> <label class="radio"> <input type="radio" name="size" value="S" checked> <span>S</span> </label> <label class="radio"> <input type="radio" name="size" value="M"> <span>M</span> </label> <label class="radio"> <input type="radio" name="size" value="L"> <span>L</span> </label> <label class="radio"> <input type="radio" name="size" value="XL"> <span>XL</span> </label> <label class="radio"> <input type="radio" name="size" value="XXL"> <span>XXL</span> </label>
                             </div> -->
-                            <div class="cart mt-4 "> <button class="btn btn-primary text-uppercase m-2 px-4">Add to cart</button> <i class="fa fa-heart text-muted"></i> <i class="fa fa-share-alt text-muted"></i> </div>
+                            
+                            <form class="cart mt-4 " action="/basket/<%= productDetail.id %>/add" method="POST" > <button class="btn btn-primary text-uppercase m-2 px-4">Add to cart</button> <i class="fa fa-heart text-muted"></i> <i class="fa fa-share-alt text-muted"></i> </form>
                             <% if (user.role === "admin") { %>
                                 <button class="btn btn-secondary text-uppercase mr-2 px-4" data-toggle="modal" data-target=".bd-update-modal-sm">Update</button>
                                 <button class="btn btn-danger text-uppercase mr-2 px-4" name="mydelete" id="mydelete">Delete</button>
@@ -71,10 +79,11 @@
                   <div class="img error text-danger"></div>
               </div>
               <div class="mb-2 mx-2">
+                    <input type="checkbox" name="isActive" id="isActive" onclick="CBSelectedValueToTrue(this);">
                     <label for="discount" class="form-label">Discount</label>
                     <input type="text" name="discount" id="discount">
-                    <label for="start_date" class="form-label">StartDate</label>
-                    <input type="datetime" name="start_date" id="start_date">
+                    <label for="code" class="form-label">Code</label>
+                    <input type="text" name="code" id="code">
                     <label for="end_date" class="form-label">EndDate</label>
                     <input type="datetime" name="end_date" id="end_date">
               </div>
@@ -97,8 +106,9 @@
         let update_price = document.getElementById("update_price").value;
         let update_dec = document.getElementById("update_dec").value;
         let update_img = document.getElementById("update_img").value;
+        let isActive =document.getElementById("isActive").checked;
         let discount = document.getElementById("discount").value;
-        let start_date = document.getElementById("start_date").value;
+        let code = document.getElementById("code").value;
         let end_date = document.getElementById("end_date").value;
 
 
@@ -112,7 +122,9 @@
                     update_price,
                     update_dec,
                     update_img,
-                   
+                    discount,
+                    code,
+                    isActive
                 })
         
             })

@@ -14,6 +14,9 @@ const ProductSchema = new Schema({
         required: true
         
     },
+    finalPrice:{
+        type: mongoose.Types.Decimal128
+    },
     image: {
         type: String,
         required: true,
@@ -23,15 +26,16 @@ const ProductSchema = new Schema({
         type: String,
         required: true
     },
-    // discount:[
-    //     {
-    //         code: String,
-    //         percent: mongoose.Types.Decimal128,
-    //         start_date: Date,
-    //         end_date: Date,
-    //         isActive: Boolean
-    //     }
-    // ],
+    discount:[
+       
+        {
+            code: String,
+            percent: mongoose.Types.Decimal128,
+            start_date: Date,
+            end_date: Date,
+            isActive: Boolean
+        }
+    ],
 
     createdAt: {
         type: Date,
