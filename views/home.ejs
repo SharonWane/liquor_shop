@@ -1,5 +1,11 @@
 <%- include('partials/header') %>
+<link rel="stylesheet" href="static/css/home.css">
 <section>
+  <%// if (user.role === "admin") { %>
+    <!-- <div class="p-2">
+        <button class="btn btn-primary" data-toggle="modal" data-target=".bd-updatehome-modal-pd">Edit Home</button>
+    </div> -->
+ <% //} %>  
     <div id="carouselExampleDark" class="carousel carousel-dark slide" data-bs-ride="carousel">
         <div class="carousel-indicators">
           <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
@@ -38,7 +44,152 @@
           <span class="visually-hidden">Next</span>
         </button>
       </div>
+
+      <div class="home2">
+        <div class="home2inter">
+            <div class="home2left">
+                <img class="homeimg1" src="https://media.istockphoto.com/id/869367766/vector/liqueur-whiskey-vodka-and-other-bottles-of-alcoholic-drinks-vector-pictures-in-flat-style.jpg?s=612x612&w=0&k=20&c=LHzBORE8rUSw1InAksrxXfykcOrpCYrr0nJLEf_s6-8=" alt="">
+            </div>
+            <div class="home2right">
+                <img class="homeimg1" src="https://greatbritishrecipes.com/wp-content/uploads/2022/07/Prawn-Canapes9FI.jpg" alt="">
+                
+            </div>
+        </div>
+
+
+    </div>
+    <div class="home4">
+      <div class="home4top">Brands</div>
+      <div class="home4bottom">
+          <div class="promo"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTRROHvon9nZmQ3_jj9JLzmr_oREapGhPiqag&s" alt="">
+              <div class="promotext1"></div>
+              
+              <div class="promotext3"></div>
+              <!-- <div class="promotext4">VIEW</div> -->
+          </div>
+          <div class="promo"><img src="https://i.pinimg.com/564x/6c/b8/d2/6cb8d2031848c59812d1ae298939f4ed.jpg" alt="">
+              <div class="promotext1"></div>
+              
+              <div class="promotext3"></div>
+              <!-- <div class="promotext4">VIEW</div> -->
+          </div>
+          <div class="promo"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ-g6oQRJHTl8LXyIRLgGbuAUwDJpoVgftysA&s" alt="">
+              <div class="promotext1"></div>
+              
+              <div class="promotext3"></div>
+              <!-- <div class="promotext4">VIEW</div> -->
+          </div>
+          
+      </div>
+  </div>
 </section>
+
+<!-- <div class="modal fade bd-updatehome-modal-pd" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-sm ">
+    <div class="modal-content">
+        <form action="" id="update_home_form" method="post">
+            <h2>Edit Home</h2>
+            <div class="mb-2 mx-2">
+                <label for="home1img_1" class="form-lable">Home1Img_1</label>
+                <input type="text" class="form-control" name="home1img_1" id="home1img_1" value="<%=  %>" required> 
+            </div>
+            <div class="mb-2 mx-2">
+                <label for="home1img_1" class="form-lable">Home1Text_1</label>
+                <input type="text" class="form-control" name="home1text_1" id="home1text_1" value="<%=  %>" required>  
+            </div>
+            <div class="mb-2 mx-2">
+                <label for="home1long_1" class="form-lable">Home1Long_1</label>
+                <textarea name="home1long_1" id="home1long_1" cols="30" rows="3"><%=  %></textarea>  
+            </div>
+            <div class="mb-2 mx-2">
+              <label for="home1img_2" class="form-lable">Home1Img_2</label>
+              <input type="text" class="form-control" name="home1img_2" id="home1img_2" value="<%=  %>" required> 
+          </div>
+          <div class="mb-2 mx-2">
+              <label for="home1img_2" class="form-lable">Home1Text_2</label>
+              <input type="text" class="form-control" name="home1text_2" id="home1text_2" value="<%=  %>" required>  
+          </div>
+          <div class="mb-2 mx-2">
+              <label for="home1long_2" class="form-lable">Home1Long_2</label>
+              <textarea name="home1long_2" id="home1long_2" cols="30" rows="3"><%=  %></textarea>  
+          </div>
+          <div class="mb-2 mx-2">
+            <label for="home1img_3" class="form-lable">Home1Img_3</label>
+            <input type="text" class="form-control" name="home1img_3" id="home1img_3" value="<%=  %>" required> 
+        </div>
+        <div class="mb-2 mx-2">
+            <label for="home1img_3" class="form-lable">Home1Text_3</label>
+            <input type="text" class="form-control" name="home1text_3" id="home1text_3" value="<%=  %>" required>  
+        </div>
+        <div class="mb-2 mx-2">
+            <label for="home1long_3" class="form-lable">Home1Long_3</label>
+            <textarea name="home1long_3" id="home1long_3" cols="30" rows="3"><%=  %></textarea>  
+        </div>
+            
+
+            <div class="mb-2 d-flex justify-content-center">
+                <button type="submit" class="btn btn-secondary">Update</button>
+            </div>
+        </form>
+    </div>
+  </div>
+</div>
+
+<script>
+  const updateform = document.getElementById("update_product_form");
+
+  updateform.addEventListener("submit", async(e)=>{
+      e.preventDefault();
+      let home1img_1 = document.getElementById("home1img_1").value;
+      let home1text_1 = document.getElementById("home1text_1").value;
+      let home1long_1 = document.getElementById("home1long_1").value;
+      let home1img_2 = document.getElementById("home1img_2").value;
+      let home1text_2 = document.getElementById("home1text_2").value;
+      let home1long_2 = document.getElementById("home1long_2").value;
+      let home1img_3 = document.getElementById("home1img_3").value;
+      let home1text_3 = document.getElementById("home1text_3").value;
+      let home1long_3 = document.getElementById("home1long_3").value;
+      
+     
+
+
+      try{
+        console.log("homeedit is here in client")
+          let res = await fetch("/homeEdit",{
+              method:"POST",
+              headers:{"Content-Type":"application/json"},
+              body: JSON.stringify({
+                  home1img_1,
+                  home1text_1,
+                  home1long_1,
+                  home1img_2,
+                  home1text_2,
+                  home1long_2,
+                  home1img_3,
+                  home1text_3,
+                  home1long_3
+              })
+      
+          })
+          if(res.status === 200){
+              alert("Home updated successfully");
+             
+          }
+          else if(err){
+              console.log(err)
+          }
+          else{
+              alert("fail");
+          }
+      
+      }catch(err){
+          console.log(err)
+          alert("something went worng");
+      }
+     
+      
+  })
+</script> -->
 
 
 

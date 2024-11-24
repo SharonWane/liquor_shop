@@ -1,6 +1,7 @@
 const jwt = require("jsonwebtoken");
 const Product = require("../Models/ProductModel");
 const { User } = require("../Models/UserModel");
+const Admin = require("../Models/AdminModel");
 
 // Route to display the basket page
 module.exports.basketget = (req, res) => {
@@ -101,3 +102,48 @@ module.exports.basketclear = (req, res) => {
     req.session.basket = [];
     res.redirect('/basket');
 };
+
+
+module.exports.aboutusget = (req,res) => {
+    res.render("aboutus", {title_name: "AboutUs"});
+}
+
+module.exports.appetizerget = (req,res) => {
+    res.render("appetizer", {title_name: "Appetizer"});
+}
+
+// module.exports.HomeEdit = async function(req,res){
+//     let home1img_1 = req.body.home1img_1;
+//     let home1text_1 = req.body.home1text_1; 
+//     let home1long_1 = req.body.home1long_1;
+//     let home1img_2 = req.body.home1img_2;
+//     let home1text_2 = req.body.home1text_2;
+//     let home1long_2 = req.body.home1long_2;
+//     let home1img_3 = req.body.home1img_3;
+//     let home1text_3 = req.body.home1text_3;
+//     let home1long_3 = req.body.home1long_3;
+
+//     console.log("we are trying to add to db");
+   
+//     homeE = new Admin({
+//         home1img_1,
+//         home1text_1,
+//         home1long_1,
+//         home1img_2,
+//         home1text_2,
+//         home1long_2,
+//         home1img_3,
+//         home1text_3,
+//         home1long_3
+//     })
+//     try{
+//         homeE = await homeE.save();
+//         res.status(201).json({
+//             homeE
+//         })
+//     } catch(err){
+//         res.json({
+//             errors: err.message
+//         })
+//     }
+// }

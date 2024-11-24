@@ -22,12 +22,12 @@
                             <div class="mt-4 mb-3"> <span class=" text-muted brand" id="productId"><%= productDetail.id %></span>
                                 <h5 class="text-uppercase"><%= productDetail.name %></h5>
                                 <div class="price d-flex flex-row align-items-center"> <span class="act-price"><%= productDetail.price %></span>
-                                    <% if (productDetail.discount[0] && productDetail.discount[0].isActive) { %>
+                                    <%// if (productDetail.discount[0] && productDetail.discount[0].isActive) { %>
                                         <div class="ml-2"> 
                                             <small class="dis-price"><%= productDetail.price %></small>
-                                             <%= productDetail.discount[0].percent %> % 
+                                             <%= //productDetail.discount[0].percent %> % 
                                         </div>
-                                    <% } %>
+                                    <% //} %>
                                     
                                     
                                 </div>
@@ -39,8 +39,12 @@
                             
                             <form class="cart mt-4 " action="/basket/<%= productDetail.id %>/add" method="POST" > <button class="btn btn-primary text-uppercase m-2 px-4">Add to cart</button> <i class="fa fa-heart text-muted"></i> <i class="fa fa-share-alt text-muted"></i> </form>
                             <% if (user.role === "admin") { %>
-                                <button class="btn btn-secondary text-uppercase mr-2 px-4" data-toggle="modal" data-target=".bd-update-modal-sm">Update</button>
-                                <button class="btn btn-danger text-uppercase mr-2 px-4" name="mydelete" id="mydelete">Delete</button>
+                                
+                                <button class="btn btn-secondary text-uppercase mr-2 px-4" data-toggle="modal" data-target=".bd-update-modal-pd">Update</button>
+                                <form action="" id="deleteProduct" method="delete">
+                                    <button  type="submit" class="btn btn-danger text-uppercase mr-2 px-4" name="mydelete" id="mydelete">Delete</button>
+                                </form>
+                                
                                 <button class="btn btn-warning text-uppercase mr-2 px-4" name="remove" id="remove">Remove</button>
                                 <% } %>
                         </div>
@@ -52,7 +56,7 @@
 </div>
 
 
-<div class="modal fade bd-update-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+<div class="modal fade bd-update-modal-pd" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-sm ">
       <div class="modal-content">
           <form action="" id="update_product_form" method="post">
@@ -78,7 +82,7 @@
                   <input type="text" class="form-control" name="update_img" id="update_img" value="<%= productDetail.image %>" required>
                   <div class="img error text-danger"></div>
               </div>
-              <div class="mb-2 mx-2">
+              <!-- <div class="mb-2 mx-2">
                     <input type="checkbox" name="isActive" id="isActive" onclick="CBSelectedValueToTrue(this);">
                     <label for="discount" class="form-label">Discount</label>
                     <input type="text" name="discount" id="discount">
@@ -86,7 +90,7 @@
                     <input type="text" name="code" id="code">
                     <label for="end_date" class="form-label">EndDate</label>
                     <input type="datetime" name="end_date" id="end_date">
-              </div>
+              </div> -->
               <div class="mb-2 d-flex justify-content-center">
                   <button type="submit" class="btn btn-secondary">Update</button>
               </div>
@@ -97,19 +101,19 @@
 
 
   <script>
-    const form = document.getElementById("update_product_form");
+    const updateform = document.getElementById("update_product_form");
   
-    form.addEventListener("submit", async(e)=>{
+    updateform.addEventListener("submit", async(e)=>{
         e.preventDefault();
         const productId = document.getElementById("productId").textContent;
         let update_name = document.getElementById("update_name").value;
         let update_price = document.getElementById("update_price").value;
         let update_dec = document.getElementById("update_dec").value;
         let update_img = document.getElementById("update_img").value;
-        let isActive =document.getElementById("isActive").checked;
-        let discount = document.getElementById("discount").value;
-        let code = document.getElementById("code").value;
-        let end_date = document.getElementById("end_date").value;
+       // let isActive =document.getElementById("isActive").checked;
+       // let discount = document.getElementById("discount").value;
+       // let code = document.getElementById("code").value;
+       // let end_date = document.getElementById("end_date").value;
 
 
         try{
@@ -122,9 +126,9 @@
                     update_price,
                     update_dec,
                     update_img,
-                    discount,
-                    code,
-                    isActive
+                    //discount,
+                    //code,
+                    //isActive
                 })
         
             })
@@ -149,28 +153,42 @@
   </script>
 
   <script>
-    mydelete.addEventListener("click", async (e) => {
-        e.preventDefault();
-        alert("This Item Will Be Deleted Completely!!! Are you sure you want to do this?")
-        const productId = document.getElementById("productId").textContent;
-        
-        try {
-            let res = await fetch(`/deleteproduct/${productId}`, {
-                method: "DELETE",
-                headers: { "Content-Type": "application/json" },
-            });
-    
-            if (res.status === 200) {
-                alert("Product deleted successfully");
-            } else {
-               
-                alert("Failed to delete the product");
-            }
-        } catch (err) {
-            console.log(err);
-            alert("Something went wrong");
+    document.addEventListener("DOMContentLoaded", () => {
+        const pddelete = document.getElementById("deleteProduct");
+        if (!pddelete) {
+            console.error("Element with ID 'deleteProduct' not found!");
+            return;
         }
+    
+        pddelete.addEventListener("submit", async (e) => {
+            e.preventDefault(); // Prevent default form submission
+            const confm = confirm("This Item Will Be Deleted Completely!!! Are you sure you want to do this?");
+            if (!confm) return;
+    
+            const productId = document.getElementById("productId")?.textContent;
+            if (!productId) {
+                alert("Product ID not found!");
+                return;
+            }
+    
+            try {
+                const res = await fetch(`/deleteproduct/${productId}`, {
+                    method: "DELETE",
+                    headers: { "Content-Type": "application/json" },
+                });
+    
+                if (res.status === 200) {
+                    alert("Product deleted successfully");
+                } else {
+                    alert("Failed to delete the product");
+                }
+            } catch (err) {
+                console.error("Fetch error:", err);
+                alert("Something went wrong");
+            }
+        });
     });
+    
 
     remove.addEventListener("click", async(e)=>{
         e.preventDefault();

@@ -13,7 +13,8 @@ const authRouter = require("./routers/authRouter");
 const productRouter = require("./routers/productRouter");
 const pagesRouter = require("./routers/pagesRouter")
 const {everyMinute} = require("./services/cronService");
-// const pagesRouter = require("./routers/pagesRouter");
+const Admin = require("./Models/AdminModel");
+
 dotenv.config();
 
 //setting express api in localhost:3000
@@ -43,11 +44,23 @@ app.use(session({
     cookie: { secure: false } // Set to true if using HTTPS
 }));
 
-app.get("/", (req,res)=>{
+app.get("/", async(req,res)=>{
+
+    // const homeItems = await Admin.find();
+    // try{
+    //     res.render("home",
+    //      {wellcomeString : "Nice to See you",
+    //      title_name: "Home", homeItems:homeItems});
+    //     } catch (error) {
+    //         console.error("Error fetching products:", error);
+    //         res.status(500).send("Internal Server Error");
+    //     }
     res.render("home",
     {wellcomeString : "Nice to See you",
     title_name: "Home"})
 });
+
+
 
 // app.get("/run-job", (req, res) => {
 //     everyMinute.fireOnTick();

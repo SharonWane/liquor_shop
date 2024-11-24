@@ -1,0 +1,87 @@
+.home2{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    margin: 10px;
+}
+.home2inter{
+    display: flex;
+    justify-content: space-around;
+    width: 90%;
+    margin-top: 20px;
+    flex-wrap: wrap;
+    min-width: 380px;
+}
+.home2left{
+    width: 45%;
+    
+    box-shadow: 0 0 10px black;
+    border-radius: 20px;
+}
+
+.home2right{
+    width: 45%;
+    
+    box-shadow: 0 0 10px black;
+    border-radius: 20px;
+}
+
+.homeimg1{
+    width: 100%;
+}
+
+.home4{
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+.home4top{
+    font-size: 30px;
+    color: white;
+    padding-left: 30px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    background-color: gray;
+}
+.home4bottom{
+    display: flex;
+    justify-content: space-around;
+    margin-top: 20px;
+    flex-wrap: wrap;
+}
+.promo{
+    width: 20%;
+    text-align: center;
+    transition: all ease 0.5s;
+    min-width: 250px;
+    margin-bottom: 20px;
+}
+.promo:hover{
+    transform: translateY(-10px);
+}
+.promo img{
+    width: 100%;
+    height: 250px;
+    border-radius: 20px;
+}
+.promotext1{
+    font-size: 20px;
+}
+.promotext2{
+    color: gold;
+}
+.promotext3{
+    font-size: 20px;
+    color: green;
+}
+.promotext4{
+    font-size: 20px;
+    border: 3px solid black;
+    transition: all ease 0.5s;
+    
+}
+.promotext4:hover{
+    transform: scale(1.2);
+    color: rgb(251, 255, 5);
+    border: 3px solid yellow;
+}

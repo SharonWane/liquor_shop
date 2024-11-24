@@ -8,7 +8,7 @@
 
  <% if (user.role === "admin") { %>
     <div class="p-2">
-        <button class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-sm">Add Product</button>
+        <button class="btn btn-primary" data-toggle="modal" data-target=".bd-addproduct-modal-sm">Add Product</button>
     </div>
  <% } %>   
 
@@ -30,7 +30,7 @@
 
 </section>
 
-<div class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+<div class="modal fade bd-addproduct-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-sm ">
       <div class="modal-content">
           <form action="" id="add_product_form" method="post">
@@ -69,25 +69,27 @@
 
 
 <script>
-  const form = document.getElementById("add_product_form");
+  const addform = document.getElementById("add_product_form");
 
-  form.addEventListener("submit", async(e)=>{
+  addform.addEventListener("submit", async(e)=>{
       e.preventDefault();
 
-      let name = document.getElementById("name").value;
-      let price = document.getElementById("price").value;
-      let description = document.getElementById("dec").value;
-      let image = document.getElementById("img").value;
-     
+      let Name = document.getElementById("name").value;
+      let Price = document.getElementById("price").value;
+      let Description = document.getElementById("dec").value;
+      let Image = document.getElementById("img").value;
+      
       try{
+
+        console.log(`we have ${Name}, ${Price} , ${Image}, ${Description} in client-side.`);
           let res = await fetch("/product",{
               method:"POST",
               headers:{"Content-Type":"application/json"},
               body: JSON.stringify({
-                  name,
-                  price,
-                  description,
-                  image
+                  Name,
+                  Price,
+                  Description,
+                  Image
               })
 
           })

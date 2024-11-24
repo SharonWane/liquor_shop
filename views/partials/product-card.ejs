@@ -14,11 +14,18 @@
 	position: absolute;
 	font-family: 'Denk One', sans-serif;
 	text-transform:uppercase;
-	padding: 10%;
+	padding: 10%;}
+
+  
+
+  #product-description {
+    overflow: hidden;
+    max-height: 40px; /* Approximate 2 lines of text */
+    transition: max-height 0.3s ease;
+  }
+  
+  
  
-}
-
-
 </style>
 
   
@@ -33,7 +40,11 @@
     <div class="card-body">
       <h5 class="card-title text-primary"><%= product.name %></h5>
       <h5 class="card-title text-success"><%= product.price %></h5>
-        <p class="card-text text-secondary"><%= product.description %></p>
+      
+        <p class="card-text text-secondary" id="product-description"><%= product.description %></p>
+        
+      
+        
       <form action="basket/<%= product.id %>/add" method="POST">
           <input type="hidden" name="productId" value="<%= product.id %>">
           <button type="submit" class="btn btn-primary">Add to Basket</button>
@@ -45,6 +56,6 @@
 
 
 <script>
-
+  
 </script>
   

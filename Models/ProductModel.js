@@ -26,16 +26,16 @@ const ProductSchema = new Schema({
         type: String,
         required: true
     },
-    discount:[
+    // discount:[
        
-        {
-            code: String,
-            percent: mongoose.Types.Decimal128,
-            start_date: Date,
-            end_date: Date,
-            isActive: Boolean
-        }
-    ],
+    //     {
+    //         code: String,
+    //         percent: mongoose.Types.Decimal128,
+    //         start_date: Date,
+    //         end_date: Date,
+    //         isActive: Boolean
+    //     }
+    // ],
 
     createdAt: {
         type: Date,

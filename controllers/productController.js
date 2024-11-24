@@ -52,10 +52,11 @@ module.exports.productlink = async (req, res) => {
 
 
 module.exports.productPost = async function(req,res){
-    let name = req.body.name;
-    let price = req.body.price;
-    let image = req.body.image;
-    let description = req.body.description;
+    let name = req.body.Name;
+    let price = req.body.Price;
+    let image = req.body.Image;
+    let description = req.body.Description;
+    console.log(`we have ${name}, ${price} , ${image}, ${description}`);
     product = new Product({
         name,price,image,description
     })
@@ -71,9 +72,9 @@ module.exports.productPost = async function(req,res){
     }
 }
 
-module.exports.addproduct= (req,res)=>{
-    res.render("addproduct", {title_name:"Add-Product"});
-}
+// module.exports.addproduct= (req,res)=>{
+//     res.render("addproduct", {title_name:"Add-Product"});
+// }
 module.exports.searchProduct = async function(req,res){
     let keyword = req.query.keyword;
     if(keyword === ""){
@@ -84,6 +85,8 @@ module.exports.searchProduct = async function(req,res){
     }
     //searching form mongodb
     let products = await Product.find({"name": {"$regex": keyword, "$options":"i"}});
+
+    
     res.render("partials/selection-section",{selection: products}, (err, html)=>{
         if(err){
             res.status(500).json({
@@ -146,13 +149,13 @@ module.exports.productUpdatePost = async(req,res)=>{
           description: update_description,
           image: update_image,
           updatedAt: updatedAt,
-          discount:[
-            {
-                code: Code,
-                percent: discount,
-                isActive : isactive
-            }
-          ]
+        //   discount:[
+        //     {
+        //         code: Code,
+        //         percent: discount,
+        //         isActive : isactive
+        //     }
+        //   ]
         });
         res.render("product",{ title_name:"Products"}, (err, html)=>{
             if(err){

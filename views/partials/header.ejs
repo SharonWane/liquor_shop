@@ -29,7 +29,7 @@
                 </li>
 
                 <li class="nav-item">
-                  <a class="nav-link" href="#">AboutUs</a>
+                  <a class="nav-link" href="/aboutus">AboutUs</a>
                 </li>
 
                 <li class="nav-item">
@@ -47,8 +47,8 @@
                       </a>
                       <div class="dropdown-menu bg-dark" aria-labelledby="navbarDropdown">
                         <a class="dropdown-item text-light" href="/product" >All</a>
-                        <a class="dropdown-item text-light" href="#">Drink</a>
-                        <a class="dropdown-item text-light" href="#">Snap</a>
+                        <a class="dropdown-item text-light" href="/product">Drink</a>
+                        <a class="dropdown-item text-light" href="/appetizer">Snap</a>
                       </div>
                 </li>
 
@@ -57,12 +57,17 @@
                   
                 </ul>
 
+
               <% if (!locals.user) { %>
                 <li class="nav-item"><a class="nav-link btn btn-primary" href="login">Login</a></li> 
               <% } else { %>
                 <li class="nav-item"><a href="/logout" class="btn btn-danger">LogOut</a></li>
+                <li class="nav-item"><a href="" class="btn btn-primary ml-2" data-toggle="modal" data-target=".bd-update-modal-sm">Edit</a></li>
+                
               <% } %>
-
+              
+                
+              
               <a class="mx-2" href="/basket" ><svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="white" class="bi bi-basket-fill ml-2" viewBox="0 0 16 16">
                 <path d="M5.071 1.243a.5.5 0 0 1 .858.514L3.383 6h9.234L10.07 1.757a.5.5 0 1 1 .858-.514L13.783 6H15.5a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.5.5H15v5a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V9H.5a.5.5 0 0 1-.5-.5v-2A.5.5 0 0 1 .5 6h1.717zM3.5 10.5a.5.5 0 1 0-1 0v3a.5.5 0 0 0 1 0zm2.5 0a.5.5 0 1 0-1 0v3a.5.5 0 0 0 1 0zm2.5 0a.5.5 0 1 0-1 0v3a.5.5 0 0 0 1 0zm2.5 0a.5.5 0 1 0-1 0v3a.5.5 0 0 0 1 0zm2.5 0a.5.5 0 1 0-1 0v3a.5.5 0 0 0 1 0z"/>
               </svg></a>
@@ -84,9 +89,139 @@
           </nav>
     </header>
     
+    <% if (locals.user) { %>
+    <div class="modal fade bd-update-modal-sm" tabindex="-1" role="dialog" aria-labelledby="myProfileUpdateModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-sm ">
+        <div class="modal-content">
+            <form action="" id="update_profile_form" method="post">
+                <h2>Update Profile</h2>
+                <div class="mb-2 mx-2">
+                  <input type="hidden" id="user_id" value="<%= locals.user._id %>">
+                </div>
+                <div class="mb-2 mx-2">
+                    <label for="name" class="form-lable">User Name</label>
+                    <input type="text" class="form-control" name="update_name" id="update_name" value="<%= locals.user.username %>" required>
+                    <div class="name error text-danger"></div>
+                </div>
+                <div class="mb-2 mx-2">
+                    <label for="email" class="form-lable">Email</label>
+                    <input type="text" class="form-control" name="update_email" id="update_email" value= "<%= locals.user.email %>" required>
+                    <div class="email error text-danger"></div>
+                </div>
+                
+                <div class="mb-2 mx-2">
+                    <label for="password" class="form-lable">Password</label>
+                    <input type="password" class="form-control" name="update_password" id="update_password" value= "<%= //locals.user.password %>" required>
+                    <div class="password error text-danger"></div>
+                </div>
+
+                <div class="mb-2 mx-2">
+                  <label for="confirm_password" class="form-lable">Confirm_Password</label>
+                  <input type="password" class="form-control" name="confirm_password" id="confirm_password" value= "<%= //locals.user.password %>" required>
+                  <div class="password error text-danger"></div>
+              </div>
+                
+                
+                <div class="mb-2 d-flex justify-content-center">
+                    <button type="submit" class="btn btn-secondary">Update</button>
+                </div>
+            </form>
+            <form action="" id="delete_user_form" method="DELETE">
+              <div class="mb-2 mx-2">
+                <input type="hidden" id="user_id" value="<%= locals.user._id %>">
+              </div>
+              <div class="mb-2 d-flex justify-content-center">
+                <button type="submit" class="btn btn-danger">Delete</button>
+            </div>
+            </form>
+        </div>
+      </div>
+    </div>
+    <% } %>
+    <script>
+      const form = document.getElementById("update_profile_form");
+    
+      form.addEventListener("submit", async(e)=>{
+          e.preventDefault();
+          const userId = document.getElementById("user_id").value;
+          let updateUsername = document.getElementById("update_name").value;
+          let updateEmail = document.getElementById("update_email").value;
+          let updatePassword = document.getElementById("update_password").value;
+          let confirmPassword = document.getElementById("confirm_password").value;
+
+          
+
+          if (!updateUsername || !updateEmail || !updatePassword) {
+            alert('All fields are required!');
+            return;
+        }
+
+          if(updatePassword !== confirmPassword){
+            alert("Passwords do not match. Please try again.");
+            return;
+          }
+          
+          try{
+            console.log("we are trying to post here");
+              let res = await fetch(`/userupdate`,{
+                  method:"PUT",
+                  headers:{"Content-Type":"application/json"},
+                  body: JSON.stringify({
+                      userId,
+                      updateUsername,
+                      updateEmail,
+                      updatePassword
+                      
+                  })
+          
+              });
+              
+              if (res.ok) {
+                alert("Profile updated successfully");
+            } else {
+                const errorData = await res.json();
+                alert(`Error: ${errorData.message}`);
+            };
+            
+          
+          }catch(err){
+              console.error(err);
+              alert("something went worng");
+          }  
+      })
+
+      const mydelete = document.getElementById("delete_user_form")
+      mydelete.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        let cfm= confirm("This Account Will Be Deleted Completely!!! Are you sure you want to do this?")
+        if(cfm === true){
+          const Id = document.getElementById("user_id").value;
+        
+          try {
+            console.log("we are going to delete");
+              let res = await fetch(`/userDelete/${Id}`, {
+                  method: "DELETE",
+                  headers: { "Content-Type": "application/json" },
+              });
+      
+              if (res.status === 200) {
+                  alert("Account deleted successfully");
+              } else {
+                 
+                  alert("Failed to delete the Account");
+              }
+          } catch (err) {
+              console.log(err);
+              alert("Something went wrong");
+          }
+        }
+        
+    });
+    </script>
+    
     <script src="/static/js/style.js"></script>
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-
+    
     

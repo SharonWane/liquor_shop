@@ -7,7 +7,7 @@ productRouter.use(authenticated)
 productRouter.get("/product", productController.productlink);
 
 productRouter.post("/product",injectUser, productController.productPost);
-productRouter.get("/addproduct", adminOnly, productController.addproduct );
+//productRouter.get("/addproduct", adminOnly, productController.addproduct );
 productRouter.get("/find-products", productController.searchProduct);
 productRouter.get("/productview/:id", productController.productview);
 productRouter.put("/updateproduct",adminOnly, productController.productUpdatePost);
