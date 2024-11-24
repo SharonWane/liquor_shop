@@ -5,31 +5,55 @@ const {createToken,errHandler} = require("../helper/helper");
 
 
 module.exports.userPost = async(req,res)=>{
+
+    
+    const existingUser = await User.findOne({ email: req.body.email });
+    if (existingUser) {
+        return res.status(400).json({ message: 'Email is already registered.' });
+    }
+
     let newUser = User({
         username: req.body.username,
         email: req.body.email,
         password: req.body.password
     });
-    newUser.save()
-    .then(
-        ()=>{
-            let token = createToken(newUser.id);
-            res.cookie("_token",token,{maxAge: 1000 * 60 * 60 *24});
-            res.status(201).json({id: newUser.id});
-            
+    try{
+        newUser.save()
+    
+        let token = createToken(newUser.id);
+        res.cookie("_token",token,{maxAge: 1000 * 60 * 60 *24});
+        res.status(201).json({id: newUser.id});
+    }    
+        
+        catch(err){
+            let errors = errHandler(err)
+            console.log(err.message);
+            res.status(400).json({
+                errors
+            });
         }
-        )
-        .catch(
-            err=>{
-                let errors = errHandler(err)
-                console.log(err.message);
-                res.status(400).json({
-                    errors
-                    // {errors : {}}
-                });
-            }
-        );
-    }
+           
+
+    // newUser.save()
+    // .then(
+    //     ()=>{
+    //         let token = createToken(newUser.id);
+    //         res.cookie("_token",token,{maxAge: 1000 * 60 * 60 *24});
+    //         res.status(201).json({id: newUser.id});
+            
+    //     }
+    //     )
+    //     .catch(
+    //         err=>{
+    //             let errors = errHandler(err)
+    //             console.log(err.message);
+    //             res.status(400).json({
+    //                 errors
+    //                 // {errors : {}}
+    //             });
+    //         }
+    //     );
+    };
 
     module.exports.userGet = async(req,res)=>{
         try{

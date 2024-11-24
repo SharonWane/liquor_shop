@@ -63,14 +63,14 @@
               <% } else { %>
                 <li class="nav-item"><a href="/logout" class="btn btn-danger">LogOut</a></li>
                 <li class="nav-item"><a href="" class="btn btn-primary ml-2" data-toggle="modal" data-target=".bd-update-modal-sm">Edit</a></li>
-                
+                <a class="mx-2" href="/basket" ><svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="white" class="bi bi-basket-fill ml-2" viewBox="0 0 16 16">
+                  <path d="M5.071 1.243a.5.5 0 0 1 .858.514L3.383 6h9.234L10.07 1.757a.5.5 0 1 1 .858-.514L13.783 6H15.5a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.5.5H15v5a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V9H.5a.5.5 0 0 1-.5-.5v-2A.5.5 0 0 1 .5 6h1.717zM3.5 10.5a.5.5 0 1 0-1 0v3a.5.5 0 0 0 1 0zm2.5 0a.5.5 0 1 0-1 0v3a.5.5 0 0 0 1 0zm2.5 0a.5.5 0 1 0-1 0v3a.5.5 0 0 0 1 0zm2.5 0a.5.5 0 1 0-1 0v3a.5.5 0 0 0 1 0zm2.5 0a.5.5 0 1 0-1 0v3a.5.5 0 0 0 1 0z"/>
+                </svg></a>
               <% } %>
               
                 
               
-              <a class="mx-2" href="/basket" ><svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="white" class="bi bi-basket-fill ml-2" viewBox="0 0 16 16">
-                <path d="M5.071 1.243a.5.5 0 0 1 .858.514L3.383 6h9.234L10.07 1.757a.5.5 0 1 1 .858-.514L13.783 6H15.5a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.5.5H15v5a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V9H.5a.5.5 0 0 1-.5-.5v-2A.5.5 0 0 1 .5 6h1.717zM3.5 10.5a.5.5 0 1 0-1 0v3a.5.5 0 0 0 1 0zm2.5 0a.5.5 0 1 0-1 0v3a.5.5 0 0 0 1 0zm2.5 0a.5.5 0 1 0-1 0v3a.5.5 0 0 0 1 0zm2.5 0a.5.5 0 1 0-1 0v3a.5.5 0 0 0 1 0zm2.5 0a.5.5 0 1 0-1 0v3a.5.5 0 0 0 1 0z"/>
-              </svg></a>
+              
               
               <% if (title_name === "Products") { %>
                 <form class="form-inline my-2 my-lg-0"  id="search_bar">
@@ -94,7 +94,7 @@
       <div class="modal-dialog modal-sm ">
         <div class="modal-content">
             <form action="" id="update_profile_form" method="post">
-                <h2>Update Profile</h2>
+                <h2>Edit Your Account</h2>
                 <div class="mb-2 mx-2">
                   <input type="hidden" id="user_id" value="<%= locals.user._id %>">
                 </div>
