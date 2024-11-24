@@ -45,11 +45,13 @@ Follow these steps to set up the project locally:
 
 5. Set Up MongoDB
    Ensure that you have MongoDB installed and running locally.
-   By default, MongoDB listens on port 27017. The database connection string used in this project is:
    ```bash
    mongod
+
+6. By default, MongoDB listens on port 27017. The database connection string used in this project is:
+   ```bash
    const uri = "mongodb://localhost:27017/expressDB";
-   
+
 
 7. Set Up Mongoose and Connect to Database
 8. Run the Application
