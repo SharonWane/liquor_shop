@@ -12,6 +12,8 @@ this project is a trainning project of a beginner.
 - Admin dashboard for managing products
 - RESTful API for backend functionality
 
+
+
 ---
 
 ## Tech Stack
@@ -46,7 +48,8 @@ Follow these steps to set up the project locally:
 5. Set Up MongoDB
    Ensure that you have MongoDB installed and running locally.
    ```bash
-   mongod
+   mongosh
+   use expressDB
 
 6. By default, MongoDB listens on port 27017. The database connection string used in this project is:
    ```bash
@@ -55,6 +58,11 @@ Follow these steps to set up the project locally:
 
 7. Set Up Mongoose and Connect to Database
 8. Run the Application
+
+
+## Note: to test the Admin feature, you will need to manually change the role in mongoDB after register. for example-
+```bash
+db.users.updateOne({username:"Admin2"},{$set:{role:"admin"}})
   
 
 
